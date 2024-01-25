@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/bar%20graph/bar_data.dart';
+import 'package:flutter_application_1/colors/themes.dart';
 
 class MyBarGraph extends StatelessWidget {
   final double? maxY;
@@ -38,21 +39,106 @@ class MyBarGraph extends StatelessWidget {
     );
     myBarData.initBarData();
 
-    return BarChart(
-      BarChartData(
-        maxY: maxY,
-        minY: 0,
-        barGroups: myBarData.barData
-            .map(
-              (data) => BarChartGroupData(
-                x: data.x,
-                barRods: [
-                  BarChartRodData(toY: data.y),
-                ],
-              ),
-            )
-            .toList(),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+      child: BarChart(
+        BarChartData(
+          maxY: maxY,
+          minY: 0,
+          gridData: const FlGridData(show: false),
+          borderData: FlBorderData(show: false),
+          titlesData: const FlTitlesData(
+            show: true,
+            topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: 22.5,
+                  getTitlesWidget: getBottomTitles),
+            ),
+          ),
+          barGroups: myBarData.barData
+              .map(
+                (data) => BarChartGroupData(
+                  x: data.x,
+                  barRods: [
+                    BarChartRodData(
+                      toY: data.y,
+                      color: AppColors.primaryColor,
+                      width: 20,
+                      borderRadius: BorderRadius.circular(1),
+                      backDrawRodData: BackgroundBarChartRodData(
+                          show: true,
+                          toY: maxY,
+                          color: const Color.fromARGB(255, 182, 248, 234)),
+                    ),
+                  ],
+                ),
+              )
+              .toList(),
+        ),
       ),
     );
   }
+}
+
+Widget getBottomTitles(double value, TitleMeta meta) {
+  const style = TextStyle(
+    color: AppColors.textColor,
+    fontWeight: FontWeight.bold,
+    fontSize: 14,
+  );
+
+  // Assuming currentDate is the actual date
+  DateTime currentDate = DateTime.now();
+  int currentDayOfWeek = currentDate.weekday;
+
+  Widget text;
+
+  switch (value.toInt()) {
+    case 0:
+      text = _buildDayText('M', style, currentDayOfWeek == 1);
+      break;
+    case 1:
+      text = _buildDayText('T', style, currentDayOfWeek == 2);
+      break;
+    case 2:
+      text = _buildDayText('W', style, currentDayOfWeek == 3);
+      break;
+    case 3:
+      text = _buildDayText('T', style, currentDayOfWeek == 4);
+      break;
+    case 4:
+      text = _buildDayText('F', style, currentDayOfWeek == 5);
+      break;
+    case 5:
+      text = _buildDayText('S', style, currentDayOfWeek == 6);
+      break;
+    case 6:
+      text = _buildDayText('S', style, currentDayOfWeek == 7);
+      break;
+    default:
+      text = const Text(
+        '',
+        style: style,
+      );
+  }
+
+  return SideTitleWidget(
+    child: text,
+    axisSide: meta.axisSide,
+  );
+}
+
+Widget _buildDayText(String day, TextStyle style, bool isCurrentDay) {
+  return Text(
+    day,
+    style: isCurrentDay
+        ? style.copyWith(
+            color: AppColors
+                .primaryColor) // Change color to red for the current day
+        : style,
+  );
 }

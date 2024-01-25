@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/expense_data.dart';
 import 'package:flutter_application_1/pages/home_page.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  //init hive
+  await Hive.initFlutter();
+
+  //open hive box
+  await Hive.openBox("expense_db");
+
   runApp(const MyApp());
 }
 
@@ -14,10 +21,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => ExpenseData(),
-        builder: (context, child) => const MaterialApp(
-              debugShowCheckedModeBanner: false,
-              home: HomePage(),
-            ));
+      create: (context) => ExpenseData(),
+      builder: (context, child) => const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: HomePage(),
+      ),
+    );
   }
 }
