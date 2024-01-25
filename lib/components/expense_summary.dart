@@ -41,7 +41,7 @@ class ExpenseSummary extends StatelessWidget {
   }
 
   //calculate week total
-  double calculateWeekTotal(
+  String calculateWeekTotal(
       ExpenseData value,
       String monday,
       String tuesday,
@@ -60,7 +60,12 @@ class ExpenseSummary extends StatelessWidget {
       value.calculateDailyExpenseSummary()[sunday] ?? 0,
     ];
 
-    double
+    double total = 0;
+    for (int i = 0; i < values.length; i++) {
+      total += values[i];
+    }
+
+    return total.toStringAsFixed(2);
   }
 
   @override
@@ -85,15 +90,19 @@ class ExpenseSummary extends StatelessWidget {
       builder: (context, value, child) => Column(
         children: [
           //Week total
-          const Padding(
-            padding: EdgeInsets.fromLTRB(30, 10, 0, 10),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(30, 10, 0, 10),
             child: Row(
               children: [
-                Text(
+                const Text(
                   'Week Total: ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
                 ),
-                Text('Rs '),
+                Text(
+                  'Rs ${calculateWeekTotal(value, monday, tuesday, wednesday, thursday, friday, saturday, sunday)}',
+                  style: TextStyle(fontFamily: 'Poppins'),
+                ),
               ],
             ),
           ),
