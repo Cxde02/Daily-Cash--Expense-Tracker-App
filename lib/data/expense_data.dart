@@ -1,8 +1,11 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/data/hive_database.dart';
 import 'package:flutter_application_1/datetime/date_time_helper.dart';
 import 'package:flutter_application_1/models/expense_item.dart';
+import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 
 class ExpenseData extends ChangeNotifier {
   //list of all expenses
@@ -13,16 +16,27 @@ class ExpenseData extends ChangeNotifier {
     return overallExpenseList;
   }
 
+  //prepare data to display
+  final db = HiveDataBase();
+  void pData() {
+    //if exists
+    if (db.readData().isNotEmpty) {
+      overallExpenseList = db.readData();
+    }
+  }
+
   //add new expense
   void addNewExpense(ExpenseItem newExpense) {
     overallExpenseList.add(newExpense);
     notifyListeners();
+    db.saveData(overallExpenseList);
   }
 
   //delete expense
   void deleteExpense(ExpenseItem expense) {
     overallExpenseList.remove(expense);
     notifyListeners();
+    db.saveData(overallExpenseList);
   }
 
   //get weekday
