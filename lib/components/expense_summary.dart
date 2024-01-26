@@ -68,6 +68,19 @@ class ExpenseSummary extends StatelessWidget {
     return total.toStringAsFixed(2);
   }
 
+  //calc day total
+  String calculateDayTotal(ExpenseData value) {
+    Map<String, double> dailyExpenseSummary =
+        value.calculateDailyExpenseSummary();
+
+    double total = 0;
+    dailyExpenseSummary.forEach((day, expense) {
+      total += expense ?? 0;
+    });
+
+    return total.toStringAsFixed(2);
+  }
+
   @override
   Widget build(BuildContext context) {
     //get ddmmyyyy for each day of the week
@@ -101,6 +114,22 @@ class ExpenseSummary extends StatelessWidget {
                 ),
                 Text(
                   'Rs ${calculateWeekTotal(value, monday, tuesday, wednesday, thursday, friday, saturday, sunday)}',
+                  style: TextStyle(fontFamily: 'Poppins'),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(30, 0, 0, 10),
+            child: Row(
+              children: [
+                const Text(
+                  'Total for today: ',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
+                ),
+                Text(
+                  'Rs ${calculateDayTotal(value)}',
                   style: TextStyle(fontFamily: 'Poppins'),
                 ),
               ],
