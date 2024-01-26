@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/colors/themes.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseTile extends StatelessWidget {
@@ -35,20 +36,23 @@ class ExpenseTile extends StatelessWidget {
         title: Text(
           name,
           style: TextStyle(
-              fontFamily: 'Poppins',
+              fontFamily: GoogleFonts.montserrat().fontFamily,
               fontWeight: FontWeight.w500,
               color: AppColors.textColor),
         ),
         subtitle: Text(
-          '${dateTime.day}-${DateFormat('MMM').format(dateTime)}-${dateTime.year}',
-          style: TextStyle(fontFamily: 'Poppins', fontSize: 11),
+          '${DateFormat('EEEE').format(dateTime)}, ${dateTime.day}-${DateFormat('MMM').format(dateTime)}-${dateTime.year}',
+          style: TextStyle(
+              fontFamily: GoogleFonts.barlow().fontFamily,
+              fontSize: 10,
+              color: Color.fromARGB(172, 29, 29, 29)),
         ),
         trailing: Text(
           'Rs $amount',
           style: TextStyle(
               fontFamily: 'Courier',
-              fontWeight: FontWeight.bold,
-              fontSize: 10.5),
+              fontWeight: FontWeight.w900,
+              fontSize: 11.5),
         ),
       ),
     );

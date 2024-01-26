@@ -2,25 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/bar%20graph/bar_graph.dart';
 import 'package:flutter_application_1/data/expense_data.dart';
 import 'package:flutter_application_1/datetime/date_time_helper.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseSummary extends StatelessWidget {
   final DateTime startOfWeek;
-  const ExpenseSummary({
-    super.key,
-    required this.startOfWeek,
-  });
 
-  //calc max amount in bar graph
+  const ExpenseSummary({
+    Key? key,
+    required this.startOfWeek,
+  }) : super(key: key);
+
   double calculateMax(
-      ExpenseData value,
-      String monday,
-      String tuesday,
-      String wednesday,
-      String thursday,
-      String friday,
-      String saturday,
-      String sunday) {
+    ExpenseData value,
+    String monday,
+    String tuesday,
+    String wednesday,
+    String thursday,
+    String friday,
+    String saturday,
+    String sunday,
+  ) {
     double? max = 100;
 
     List<double> values = [
@@ -33,23 +35,21 @@ class ExpenseSummary extends StatelessWidget {
       value.calculateDailyExpenseSummary()[sunday] ?? 0,
     ];
 
-    //sort from smallest to largest
     values.sort();
-    //get largest amount and increase the cap to make graph look almost full
     max = values.last * 1.1;
     return max == 0 ? 100 : max;
   }
 
-  //calculate week total
   String calculateWeekTotal(
-      ExpenseData value,
-      String monday,
-      String tuesday,
-      String wednesday,
-      String thursday,
-      String friday,
-      String saturday,
-      String sunday) {
+    ExpenseData value,
+    String monday,
+    String tuesday,
+    String wednesday,
+    String thursday,
+    String friday,
+    String saturday,
+    String sunday,
+  ) {
     List<double> values = [
       value.calculateDailyExpenseSummary()[monday] ?? 0,
       value.calculateDailyExpenseSummary()[tuesday] ?? 0,
@@ -68,22 +68,13 @@ class ExpenseSummary extends StatelessWidget {
     return total.toStringAsFixed(2);
   }
 
-  //calc day total
-  String calculateDayTotal(ExpenseData value) {
-    Map<String, double> dailyExpenseSummary =
-        value.calculateDailyExpenseSummary();
-
-    double total = 0;
-    dailyExpenseSummary.forEach((day, expense) {
-      total += expense ?? 0;
-    });
-
-    return total.toStringAsFixed(2);
+  String calculateDailyTotal(ExpenseData value, String day) {
+    double amount = value.calculateDailyExpenseSummary()[day] ?? 0;
+    return amount.toStringAsFixed(2);
   }
 
   @override
   Widget build(BuildContext context) {
-    //get ddmmyyyy for each day of the week
     String monday =
         convertDateTimeToString(startOfWeek.add(const Duration(days: 0)));
     String tuesday =
@@ -102,41 +93,50 @@ class ExpenseSummary extends StatelessWidget {
     return Consumer<ExpenseData>(
       builder: (context, value, child) => Column(
         children: [
-          //Week total
           Padding(
             padding: const EdgeInsets.fromLTRB(30, 10, 0, 10),
             child: Row(
               children: [
-                const Text(
+                Text(
                   'Week Total: ',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
+                    fontWeight: FontWeight.bold,
+                    fontFamily: GoogleFonts.montserrat().fontFamily,
+                  ),
                 ),
                 Text(
                   'Rs ${calculateWeekTotal(value, monday, tuesday, wednesday, thursday, friday, saturday, sunday)}',
-                  style: TextStyle(fontFamily: 'Poppins'),
+                  style: TextStyle(
+                      fontFamily: GoogleFonts.openSans().fontFamily,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: 0.5),
                 ),
               ],
             ),
           ),
+          // Daily Total
           Padding(
             padding: const EdgeInsets.fromLTRB(30, 0, 0, 10),
             child: Row(
               children: [
-                const Text(
-                  'Total for today: ',
+                Text(
+                  'Daily Total: ',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
+                    fontWeight: FontWeight.bold,
+                    fontFamily: GoogleFonts.montserrat().fontFamily,
+                  ),
                 ),
                 Text(
-                  'Rs ${calculateDayTotal(value)}',
-                  style: TextStyle(fontFamily: 'Poppins'),
+                  'Rs ${calculateDailyTotal(value, convertDateTimeToString(DateTime.now()))}',
+                  style: TextStyle(
+                      fontFamily: GoogleFonts.openSans().fontFamily,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: 0.5),
                 ),
               ],
             ),
           ),
 
-          //bar graph
           SizedBox(
             height: 200,
             child: MyBarGraph(
