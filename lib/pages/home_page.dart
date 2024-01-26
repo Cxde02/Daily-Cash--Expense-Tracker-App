@@ -174,27 +174,38 @@ class _HomePageState extends State<HomePage> {
   void save() {
     if (newAmountControllerRs.text.isNotEmpty &&
         newExpenseNameController.text.isNotEmpty) {
-      // add Rs + cents
-      String cents = newAmountControllerCents.text.isEmpty
-          ? "00"
-          : newAmountControllerCents.text;
-      String amount = '${newAmountControllerRs.text}.$cents';
+      if (newAmountControllerRs.text.contains('.') ||
+          newAmountControllerCents.text.contains('.')) {
+        // Display a warning if a dot is present
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
 
-      // Expense Item
-      ExpenseItem newExpense = ExpenseItem(
-        name: newExpenseNameController.text,
-        amount: amount,
-        dateTime: DateTime.now(),
-      );
+            backgroundColor: AppColors.primaryColor,
+            content: Text('Decimal point should not be in the amount fields.', textAlign:TextAlign.center , style: TextStyle(fontFamily: GoogleFonts.montserrat().fontFamily, color: AppColors.textColor),),
+            duration: Duration(seconds: 1),
+          ),
+        );
+      } else {
+        // add Rs + cents
+        String cents = newAmountControllerCents.text.isEmpty ? "00" : newAmountControllerCents.text;
+        String amount = '${newAmountControllerRs.text}.$cents';
 
-      // Add the new item
-      Provider.of<ExpenseData>(context, listen: false)
-          .addNewExpense(newExpense);
+        // Expense Item
+        ExpenseItem newExpense = ExpenseItem(
+          name: newExpenseNameController.text,
+          amount: amount,
+          dateTime: DateTime.now(),
+        );
 
-      Navigator.pop(context);
-      clearControllers();
+        // Add the new item
+        Provider.of<ExpenseData>(context, listen: false).addNewExpense(newExpense);
+
+        Navigator.pop(context);
+        clearControllers();
+      }
     }
   }
+
 
   //cancel
   void cancel() {
