@@ -3,6 +3,7 @@ import 'package:flutter_application_1/bar%20graph/bar_graph.dart';
 import 'package:flutter_application_1/data/expense_data.dart';
 import 'package:flutter_application_1/datetime/date_time_helper.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseSummary extends StatelessWidget {
@@ -120,7 +121,7 @@ class ExpenseSummary extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  'Daily Total: ',
+                  'Today\'s Expense (${DateFormat('EEEE').format(DateTime.now())}, ${DateFormat('d MMM').format(DateTime.now())}): ',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontFamily: GoogleFonts.montserrat().fontFamily,
