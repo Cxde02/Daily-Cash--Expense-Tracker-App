@@ -4,6 +4,7 @@ import 'package:flutter_application_1/components/expense_summary.dart';
 import 'package:flutter_application_1/components/expense_tile.dart';
 import 'package:flutter_application_1/data/expense_data.dart';
 import 'package:flutter_application_1/models/expense_item.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,37 +33,109 @@ class _HomePageState extends State<HomePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor:
+            const Color.fromARGB(255, 255, 255, 255).withOpacity(0.9),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius: BorderRadius.circular(15.0),
         ),
-        title: const Text('Add new expense'),
+        title: Text(
+          'Add new expense',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: AppColors.textColor,
+              fontFamily: GoogleFonts.montserrat().fontFamily,
+              fontSize: 17),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            //expense name
+            // Expense name
             TextField(
+              cursorColor: AppColors.primaryColor,
+              style: TextStyle(
+                  fontFamily: GoogleFonts.montserrat().fontFamily,
+                  fontSize: 15),
               keyboardType: TextInputType.text,
               controller: newExpenseNameController,
-              decoration: InputDecoration(labelText: 'Expense Name'),
+              decoration: InputDecoration(
+                labelText: 'Expense Name',
+                labelStyle: TextStyle(
+                  fontFamily: GoogleFonts.montserrat().fontFamily,
+                  color: Color.fromARGB(255, 46, 206, 171),
+                  fontSize: 14,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(7.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide:
+                      BorderSide(color: AppColors.primaryColor, width: 2.0),
+                ),
+              ),
             ),
+
+            SizedBox(height: 10), // Add some spacing between the text fields
 
             Row(
               children: [
-                //Rs
+                // Rs
                 Expanded(
                   child: TextField(
+                    cursorColor: AppColors.primaryColor,
+                    style: TextStyle(
+                        fontFamily: GoogleFonts.courierPrime().fontFamily,
+                        fontSize: 17),
                     keyboardType: TextInputType.number,
                     controller: newAmountControllerRs,
-                    decoration: InputDecoration(labelText: 'Amount (Rs)'),
+                    decoration: InputDecoration(
+                      labelText: 'Amount (Rs)',
+                      labelStyle: TextStyle(
+                        fontFamily: GoogleFonts.montserrat().fontFamily,
+                        color: Color.fromARGB(255, 46, 206, 171),
+                        fontSize: 13,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey), // Set your default color here
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: AppColors.primaryColor,
+                            width: 2.0), // Set your focused color here
+                      ),
+                    ),
                   ),
                 ),
 
-                //Cents
+                SizedBox(width: 10), // Add some spacing between the text fields
+
+                // Cents
                 Expanded(
                   child: TextField(
+                    cursorColor: AppColors.primaryColor,
+                    style: TextStyle(
+                        fontFamily: GoogleFonts.courierPrime().fontFamily,
+                        fontSize: 17),
                     keyboardType: TextInputType.number,
                     controller: newAmountControllerCents,
-                    decoration: InputDecoration(labelText: 'Cents'),
+                    decoration: InputDecoration(
+                      labelText: 'Cents',
+                      labelStyle: TextStyle(
+                        fontFamily: GoogleFonts.montserrat().fontFamily,
+                        color: Color.fromARGB(255, 46, 206, 171),
+                        fontSize: 13,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.grey), // Set your default color here
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: AppColors.primaryColor,
+                            width: 2.0), // Set your focused color here
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -70,11 +143,13 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         actions: [
-          //save button
+          // Cancel button
           MaterialButton(
             onPressed: cancel,
             child: Text('Cancel'),
           ),
+
+          // Save button
           MaterialButton(
             onPressed: save,
             child: Text('Save'),
