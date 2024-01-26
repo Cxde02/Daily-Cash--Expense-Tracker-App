@@ -3,8 +3,6 @@ import 'package:flutter_application_1/data/expense_data.dart';
 import 'package:flutter_application_1/pages/home_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 
 void main() async {
   //init hive

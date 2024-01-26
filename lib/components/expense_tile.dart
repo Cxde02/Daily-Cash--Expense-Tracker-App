@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class ExpenseTile extends StatelessWidget {
   final String name;
   final String amount;

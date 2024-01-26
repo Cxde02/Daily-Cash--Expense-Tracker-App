@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/hive_database.dart';
 import 'package:flutter_application_1/datetime/date_time_helper.dart';
 import 'package:flutter_application_1/models/expense_item.dart';
-import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
 
 class ExpenseData extends ChangeNotifier {
   //list of all expenses
@@ -62,7 +60,9 @@ class ExpenseData extends ChangeNotifier {
   }
 
   //get date for start of the week --> Monday
+  // ignore: non_constant_identifier_names
   DateTime StartOfWeekDate() {
+    // ignore: non_constant_identifier_names
     DateTime? StartOfWeek;
 
     //get today's date

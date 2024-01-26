@@ -146,13 +146,19 @@ class _HomePageState extends State<HomePage> {
           // Cancel button
           MaterialButton(
             onPressed: cancel,
-            child: Text('Cancel'),
+            child: Text(
+              'Cancel',
+              style: TextStyle(fontFamily: GoogleFonts.montserrat().fontFamily),
+            ),
           ),
 
           // Save button
           MaterialButton(
             onPressed: save,
-            child: Text('Save'),
+            child: Text(
+              'Save',
+              style: TextStyle(fontFamily: GoogleFonts.montserrat().fontFamily),
+            ),
           ),
         ],
       ),
@@ -166,7 +172,8 @@ class _HomePageState extends State<HomePage> {
 
   // save
   void save() {
-    if (newAmountControllerRs.text.isNotEmpty) {
+    if (newAmountControllerRs.text.isNotEmpty &&
+        newExpenseNameController.text.isNotEmpty) {
       // add Rs + cents
       String cents = newAmountControllerCents.text.isEmpty
           ? "00"
@@ -206,41 +213,40 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Consumer<ExpenseData>(
       builder: (context, value, child) => Scaffold(
-          backgroundColor: AppColors.bgColor,
-          appBar: AppBar(
-            backgroundColor: AppColors.primaryColor,
-            title: const Text(
-              'Expense Tracker',
-              style: TextStyle(
-                  fontFamily: 'Poppins',
-                  letterSpacing: 0.5,
-                  color: AppColors.accentColor),
-            ),
+        backgroundColor: AppColors.bgColor,
+        appBar: AppBar(
+          backgroundColor: AppColors.primaryColor,
+          title: const Text(
+            'Expense Tracker',
+            style: TextStyle(
+                fontFamily: 'Poppins',
+                letterSpacing: 0.5,
+                color: AppColors.accentColor),
           ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: AppColors.primaryColor,
-            onPressed: addNewExpense,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50.0),
-            ),
-            child: const Icon(
-              Icons.add,
-              color: AppColors.accentColor,
-            ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: AppColors.primaryColor,
+          onPressed: addNewExpense,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50.0),
           ),
-          body: ListView(
-            children: [
-              //weekly summary
-              ExpenseSummary(startOfWeek: value.StartOfWeekDate()),
+          child: const Icon(
+            Icons.add,
+            color: AppColors.accentColor,
+          ),
+        ),
+        body: Column(
+          children: [
+            //weekly summary
+            ExpenseSummary(startOfWeek: value.StartOfWeekDate()),
 
-              const SizedBox(
-                height: 20,
-              ),
+            const SizedBox(
+              height: 20,
+            ),
 
-              //expense list
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+            //expense list
+            Expanded(
+              child: ListView.builder(
                 itemCount: value.getAllExpenseList().length,
                 itemBuilder: (context, index) => ExpenseTile(
                   name: value.getAllExpenseList()[index].name,
@@ -250,8 +256,10 @@ class _HomePageState extends State<HomePage> {
                       deleteExpense(value.getAllExpenseList()[index]),
                 ),
               ),
-            ],
-          )),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

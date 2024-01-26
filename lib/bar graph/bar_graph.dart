@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/bar%20graph/bar_data.dart';
 import 'package:flutter_application_1/colors/themes.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyBarGraph extends StatelessWidget {
   final double? maxY;
@@ -55,7 +56,7 @@ class MyBarGraph extends StatelessWidget {
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                   showTitles: true,
-                  reservedSize: 22.5,
+                  reservedSize: 23,
                   getTitlesWidget: getBottomTitles),
             ),
           ),
@@ -67,8 +68,8 @@ class MyBarGraph extends StatelessWidget {
                     BarChartRodData(
                       toY: data.y,
                       color: AppColors.primaryColor,
-                      width: 20,
-                      borderRadius: BorderRadius.circular(1),
+                      width: 25,
+                      borderRadius: BorderRadius.circular(50),
                       backDrawRodData: BackgroundBarChartRodData(
                           show: true,
                           toY: maxY,
@@ -85,9 +86,10 @@ class MyBarGraph extends StatelessWidget {
 }
 
 Widget getBottomTitles(double value, TitleMeta meta) {
-  const style = TextStyle(
+  final style = TextStyle(
     color: AppColors.textColor,
-    fontWeight: FontWeight.bold,
+    fontFamily: GoogleFonts.openSans().fontFamily,
+    fontWeight: FontWeight.w600,
     fontSize: 14,
   );
 
@@ -120,15 +122,15 @@ Widget getBottomTitles(double value, TitleMeta meta) {
       text = _buildDayText('S', style, currentDayOfWeek == 7);
       break;
     default:
-      text = const Text(
+      text = Text(
         '',
         style: style,
       );
   }
 
   return SideTitleWidget(
-    child: text,
     axisSide: meta.axisSide,
+    child: text,
   );
 }
 
