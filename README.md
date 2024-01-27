@@ -1,7 +1,7 @@
 # Daily Cash
 <img src="DC.png" alt="app logo" height="100">
 
-**A Dice Rolling Android App**<br>
+**An Expense Tracker App**<br>
 Daily Cash was created to simplify the process of tracking your daily and weekly expenses. Designed with user-friendly features, it allows you to effortlessly record and manage your spending, providing a clear overview of your financial activities. Stay organized with a comprehensive record of your expenditures, helping you make informed decisions about your budget. Track expenses with ease, gain insights into your spending habits, and take control of your financial journey with this intuitive expense tracking app.
 
 **Screenshots**<br><br>
