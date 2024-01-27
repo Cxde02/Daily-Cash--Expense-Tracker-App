@@ -179,15 +179,22 @@ class _HomePageState extends State<HomePage> {
         // Display a warning if a dot is present
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-
             backgroundColor: AppColors.primaryColor,
-            content: Text('Decimal point should not be in the amount fields.', textAlign:TextAlign.center , style: TextStyle(fontFamily: GoogleFonts.montserrat().fontFamily, color: AppColors.textColor),),
+            content: Text(
+              'Decimal point should not be in the amount fields.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontFamily: GoogleFonts.montserrat().fontFamily,
+                  color: AppColors.textColor),
+            ),
             duration: Duration(seconds: 1),
           ),
         );
       } else {
         // add Rs + cents
-        String cents = newAmountControllerCents.text.isEmpty ? "00" : newAmountControllerCents.text;
+        String cents = newAmountControllerCents.text.isEmpty
+            ? "00"
+            : newAmountControllerCents.text;
         String amount = '${newAmountControllerRs.text}.$cents';
 
         // Expense Item
@@ -198,14 +205,14 @@ class _HomePageState extends State<HomePage> {
         );
 
         // Add the new item
-        Provider.of<ExpenseData>(context, listen: false).addNewExpense(newExpense);
+        Provider.of<ExpenseData>(context, listen: false)
+            .addNewExpense(newExpense);
 
         Navigator.pop(context);
         clearControllers();
       }
     }
   }
-
 
   //cancel
   void cancel() {
@@ -227,11 +234,11 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: AppColors.bgColor,
         appBar: AppBar(
           backgroundColor: AppColors.primaryColor,
-          title: const Text(
-            'Expense Tracker',
+          title: Text(
+            'DAILY CASH',
             style: TextStyle(
-                fontFamily: 'Poppins',
-                letterSpacing: 0.5,
+                fontFamily: GoogleFonts.abel().fontFamily,
+                letterSpacing: 1.5,
                 color: AppColors.accentColor),
           ),
         ),

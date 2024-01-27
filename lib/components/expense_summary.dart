@@ -108,8 +108,9 @@ class ExpenseSummary extends StatelessWidget {
                 Text(
                   'Rs ${calculateWeekTotal(value, monday, tuesday, wednesday, thursday, friday, saturday, sunday)}',
                   style: TextStyle(
-                      fontFamily: GoogleFonts.openSans().fontFamily,
+                      fontFamily: GoogleFonts.abel().fontFamily,
                       fontWeight: FontWeight.normal,
+                      fontSize: 15,
                       letterSpacing: 0.5),
                 ),
               ],
@@ -130,7 +131,8 @@ class ExpenseSummary extends StatelessWidget {
                 Text(
                   'Rs ${calculateDailyTotal(value, convertDateTimeToString(DateTime.now()))}',
                   style: TextStyle(
-                      fontFamily: GoogleFonts.openSans().fontFamily,
+                      fontFamily: GoogleFonts.abel().fontFamily,
+                      fontSize: 15,
                       fontWeight: FontWeight.normal,
                       letterSpacing: 0.5),
                 ),
